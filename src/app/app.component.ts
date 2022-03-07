@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Tour of Heroes';
+  title = 'Tour of Heroes'; //can set to private title to only allow within the ts class, by default is public
 }
