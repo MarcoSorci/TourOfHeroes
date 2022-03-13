@@ -38,6 +38,25 @@ export class HeroService {
     this.messageService.add('HeroService: ' + message);
   }
 
+  searchHeroes(term: string): Observable<Hero[]> {
+    if (!term.trim()) {
+      //trim removes whitespaces start and end, just to make sure
+      return of([]); //returns empty Hero array, "of" links to the observable?
+    }
+    return this.http
+      .get<Hero[]>(
+        'https://6229de55be12fc4538aa6c8e.mockapi.io/Heroes/?name=' + term
+      )
+      .pipe(
+        tap((x) =>
+          x.length //if the received array contains stuff
+            ? this.log('found heroes matching ' + term)
+            : this.log('no heroes matching ' + term)
+        ),
+        catchError(this.handleError<Hero[]>('searchHeroes', []))
+      );
+  }
+
   handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
@@ -82,22 +101,5 @@ export class HeroService {
     );
   }
 
-  searchHeroes(term: string): Observable<Hero[]> {
-    if (!term.trim()) {
-      //trim removes whitespaces start and end, just to make sure
-      return of([]); //returns empty Hero array, "of" links to the observable?
-    }
-    return this.http
-      .get<Hero[]>(
-        'https://6229de55be12fc4538aa6c8e.mockapi.io/Heroes/name=' + term
-      )
-      .pipe(
-        tap((x) =>
-          x.length
-            ? this.log('found heroes matching ' + term)
-            : this.log('no heroes matching ' + term)
-        ),
-        catchError(this.handleError<Hero[]>('searchHeroes', []))
-      );
-  }
+  
 }
