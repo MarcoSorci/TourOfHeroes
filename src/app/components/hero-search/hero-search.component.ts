@@ -12,7 +12,7 @@ import { HeroService } from 'src/app/services/hero.service';
 })
 export class HeroSearchComponent implements OnInit {
   heroes$!: Observable<Hero[]>;
-  private searchTerms = new Subject<string>();
+  private searchTerms = new Subject<string>(); //Subject is a repeatable observable
 
   constructor(private heroService: HeroService) {}
 
@@ -22,6 +22,7 @@ export class HeroSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.heroes$ = this.searchTerms.pipe(
+      // pipes before using searchTerms
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
 
@@ -31,7 +32,7 @@ export class HeroSearchComponent implements OnInit {
       // switch to new search observable each time the term changes
       switchMap((term: string) => this.heroService.searchHeroes(term))
 
-      //THESE ARE ALL RXJS OPERATORS (imported at the top)
+      // THESE ARE ALL RXJS OPERATORS (imported at the top)
     );
   }
 }

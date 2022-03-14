@@ -1,14 +1,16 @@
 <h2>My Heroes</h2>
 
-<div>
+<!-- <div>
   <label for="new-hero">Hero name: </label>
   <input id="new-hero" #heroName />
 
-  <!-- (click) passes input value to add() and then clears the input -->
+  (click) passes input value to add() and then clears the input
   <button type="button" class="add-button" (click)="add(heroName.value); heroName.value=''">
     Add hero
   </button>
-</div>
+</div> -->
+
+<app-hero-form (insertedHero)="onHeroInsert($event)"></app-hero-form>
 
 <!-- [class.selected]="hero === selectedHero" when selected hero, have that class (to give color) -->
 <ul class="heroes">
