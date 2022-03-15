@@ -41,7 +41,7 @@ export class HeroService {
   searchHeroes(term: string): Observable<Hero[]> {
     if (!term.trim()) {
       //trim removes whitespaces start and end, just to make sure
-      return of([]); //returns empty Hero array, "of" links to the observable?
+      return of([]); //returns empty Hero array, "of" links to the observable
     }
     return this.http.get<Hero[]>(this.heroesUrl + '?name=' + term).pipe(
       tap((result) =>
